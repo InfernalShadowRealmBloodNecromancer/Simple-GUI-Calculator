@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-
 public class DisplayTextField extends JTextField {
     DisplayTextField() {
         this.setHorizontalAlignment(JLabel.RIGHT);
