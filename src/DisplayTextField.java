@@ -22,9 +22,10 @@ public class DisplayTextField extends JTextField {
         this.setText("");
     }
 
-    public void displaySplitter(){
-        String display = this.getText();
+    public void equalsOperator() {
+        displayExtractor();
     }
+
     public void displayExtractor(){
         String display = this.getText();
         ArrayList<String> numbersArray = new ArrayList<>();
