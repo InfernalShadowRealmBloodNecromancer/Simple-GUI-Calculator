@@ -30,6 +30,7 @@ public class DisplayTextField extends JTextField {
         String display = this.getText();
         ArrayList<String> numbersArray = new ArrayList<>();
         ArrayList<Character> operatorsArray = new ArrayList<>();
+        ArrayList<Double> doubleArray = new ArrayList<>();
 
         if (display.length() > 0) { //won't run if there's nothing in the display
             char previousChar = ' '; //gives previousChar a value for the first iteration
@@ -41,8 +42,8 @@ public class DisplayTextField extends JTextField {
                     numbersArray.add(String.valueOf(currentChar));
                 } else {
                     if (Character.isDigit(currentChar) || currentChar == '.') { //if currentChar is a number or decimal point
-                        if (!Character.isDigit(currentChar) && (currentChar != '.')) { //if previousChar is an operator
-                            if (numbersArray.get(lastIndex).equals("-") || numbersArray.get(lastIndex).equals("+")) { //if the previous entry in the numbersArray is a + or - operator
+                        if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if previousChar is an operator
+                            if (numbersArray.get(lastIndex).equals("-") || numbersArray.get(lastIndex).equals("+")) { //if the previous value in numbersArray is a + or - operator
                                 numbersArray.set(lastIndex, numbersArray.get(lastIndex) + (display.charAt(i))); //the currentChar will be concatenated to the operator to create a negative/positive number
                             } else {
                                 numbersArray.add(String.valueOf(currentChar));//else adds the currentChar as a new value in the array
@@ -56,12 +57,18 @@ public class DisplayTextField extends JTextField {
                         } else {
                             operatorsArray.add(currentChar); //adds the operator to operatorArray
                         }
-                    previousChar = currentChar; //makes currentChar previousChar for the next iteration
                 }
+                previousChar = currentChar; //makes currentChar previousChar for the next iteration
             }
             System.out.println("Numbers: "+numbersArray);
             System.out.println("Operators: "+operatorsArray); //need to write logic to handle arrays
         }
+
+        for (String str : numbersArray){
+            double value = Double.parseDouble(str);
+            doubleArray.add(value);
+        }
+        System.out.println(doubleArray);
     }
 
     public void deleteText() {
