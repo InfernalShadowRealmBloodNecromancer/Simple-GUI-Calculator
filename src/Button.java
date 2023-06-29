@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Button extends JButton implements ActionListener {
-    private final DisplayTextField displayTextField;
+    private final DisplayOutput displayOutput;
 
-    Button(String text, DisplayTextField displayTextField) {
+    Button(String text, DisplayOutput displayOutput) {
         super(text);
         this.setActionCommand(text);
         this.setFont(new Font("Arial", Font.BOLD, 20));
@@ -14,17 +14,17 @@ public class Button extends JButton implements ActionListener {
         this.setForeground(Color.black);
         this.setFocusable(false);
         addActionListener(this);
-        this.displayTextField = displayTextField;
+        this.displayOutput = displayOutput;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
         switch (actionCommand) {
-            case "C" -> displayTextField.clearAll();
-            case "DEL" -> displayTextField.deleteText();
-            case "=" ->  displayTextField.equalsOperator();
-            default -> displayTextField.addText(actionCommand);
+            case "C" -> displayOutput.clearAll();
+            case "DEL" -> displayOutput.deleteText();
+            case "=" ->  displayOutput.equalsOperator();
+            default -> displayOutput.addText(actionCommand);
         }
     }
 }

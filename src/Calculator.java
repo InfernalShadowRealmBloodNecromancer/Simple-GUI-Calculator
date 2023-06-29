@@ -15,12 +15,12 @@ public class Calculator extends JFrame {
         constraints.gridy = 0;
         constraints.weighty = 0.4;
         constraints.weightx = 1;
-        DisplayTextField displayTextField = new DisplayTextField();
-        this.add(displayTextField,constraints);
+        DisplayOutput displayOutput = new DisplayOutput();
+        this.add(displayOutput,constraints);
 
         constraints.gridy = 1;
         constraints.weighty = 0.6;
-        ButtonPanel buttonPanel = new ButtonPanel(displayTextField);
+        ButtonPanel buttonPanel = new ButtonPanel(displayOutput);
         this.add(buttonPanel,constraints);
 
         this.pack();

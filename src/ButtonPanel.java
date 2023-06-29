@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ButtonPanel extends JPanel {
-    ButtonPanel(DisplayTextField displayTextField) {
+    ButtonPanel(DisplayOutput displayOutput) {
         this.setOpaque(true);
         this.setBackground(Color.darkGray);
         this.setLayout(new GridBagLayout());
@@ -11,24 +11,24 @@ public class ButtonPanel extends JPanel {
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weighty = 1;
         constraints.weightx = 1;
-        Button button1 = new Button("1",displayTextField);
-        Button button4 = new Button("4",displayTextField);
-        Button button7 = new Button("7",displayTextField);
-        Button button0 = new Button("0",displayTextField);
-        Button button2 = new Button("2",displayTextField);
-        Button button5 = new Button("5",displayTextField);
-        Button button8 = new Button("8",displayTextField);
-        Button button3 = new Button("3",displayTextField);
-        Button button6 = new Button("6",displayTextField);
-        Button button9 = new Button("9",displayTextField);
-        Button buttonDecimal = new Button(".",displayTextField);
-        Button buttonAdd = new Button("+",displayTextField);
-        Button buttonDivide = new Button("/",displayTextField);
-        Button buttonMultiply = new Button("*",displayTextField);
-        Button buttonSubtract = new Button("-",displayTextField);
-        Button buttonClear = new Button("C",displayTextField);
-        Button buttonDEL = new Button("DEL",displayTextField);
-        Button buttonEquals = new Button("=",displayTextField);
+        Button button1 = new Button("1", displayOutput);
+        Button button4 = new Button("4", displayOutput);
+        Button button7 = new Button("7", displayOutput);
+        Button button0 = new Button("0", displayOutput);
+        Button button2 = new Button("2", displayOutput);
+        Button button5 = new Button("5", displayOutput);
+        Button button8 = new Button("8", displayOutput);
+        Button button3 = new Button("3", displayOutput);
+        Button button6 = new Button("6", displayOutput);
+        Button button9 = new Button("9", displayOutput);
+        Button buttonDecimal = new Button(".", displayOutput);
+        Button buttonAdd = new Button("+", displayOutput);
+        Button buttonDivide = new Button("/", displayOutput);
+        Button buttonMultiply = new Button("*", displayOutput);
+        Button buttonSubtract = new Button("-", displayOutput);
+        Button buttonClear = new Button("C", displayOutput);
+        Button buttonDEL = new Button("DEL", displayOutput);
+        Button buttonEquals = new Button("=", displayOutput);
 
         constraints.gridx = 0; // column 1
         constraints.gridy = 0;

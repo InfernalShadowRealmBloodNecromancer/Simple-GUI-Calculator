@@ -2,8 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class DisplayTextField extends JTextField {
-    DisplayTextField() {
+public class DisplayOutput extends JTextField {
+    DisplayOutput() {
         this.setHorizontalAlignment(JLabel.RIGHT);
         this.setFont(new Font("digital-7", Font.PLAIN,60));
         this.setBackground(Color.gray);
