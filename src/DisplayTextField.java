@@ -26,7 +26,7 @@ public class DisplayTextField extends JTextField {
         displayExtractor();
     }
 
-    public void displayExtractor(){
+    public void displayExtractor() {
         String display = this.getText();
         ArrayList<String> numbersArray = new ArrayList<>();
         ArrayList<Character> operatorsArray = new ArrayList<>();
@@ -64,7 +64,7 @@ public class DisplayTextField extends JTextField {
             System.out.println("Operators: " + operatorsArray); //need to write logic to handle arrays
         }
 
-        for (String str : numbersArray){
+        for (String str : numbersArray) {
             double value = Double.parseDouble(str);
             doubleArray.add(value);
         }
@@ -73,7 +73,7 @@ public class DisplayTextField extends JTextField {
 
     public void deleteText() {
         int textLength = this.getText().length();
-        if (textLength>0) {
+        if (textLength > 0) {
             this.setText(this.getText().substring(0, textLength-1));
         }
     }
