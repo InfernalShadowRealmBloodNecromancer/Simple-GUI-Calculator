@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 
 public class DisplayTextField extends JTextField {
-    DisplayTextField(){
+    DisplayTextField() {
         this.setHorizontalAlignment(JLabel.RIGHT);
         this.setFont(new Font("digital-7", Font.PLAIN,60));
         this.setBackground(Color.gray);
@@ -35,7 +35,7 @@ public class DisplayTextField extends JTextField {
         if (display.length() > 0) { //won't run if there's nothing in the display
             char previousChar = ' '; //gives previousChar a value for the first iteration
 
-            for(int i = 0; i<display.length(); i++) {
+            for(int i = 0; i < display.length(); i++) {
                 char currentChar = display.charAt(i);
                 int lastIndex = numbersArray.size() - 1;
                 if (numbersArray.isEmpty()) {
@@ -60,21 +60,21 @@ public class DisplayTextField extends JTextField {
                 }
                 previousChar = currentChar; //makes currentChar previousChar for the next iteration
             }
-            System.out.println("Numbers: "+numbersArray);
-            System.out.println("Operators: "+operatorsArray); //need to write logic to handle arrays
+            System.out.println("Numbers: " + numbersArray);
+            System.out.println("Operators: " + operatorsArray); //need to write logic to handle arrays
         }
 
         for (String str : numbersArray){
             double value = Double.parseDouble(str);
             doubleArray.add(value);
         }
-        System.out.println(doubleArray);
+        System.out.println("Double numbers: " + doubleArray);
     }
 
     public void deleteText() {
         int textLength = this.getText().length();
-        if (textLength>0){
-            this.setText(this.getText().substring(0,textLength-1));
+        if (textLength>0) {
+            this.setText(this.getText().substring(0, textLength-1));
         }
     }
 }
