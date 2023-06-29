@@ -73,7 +73,7 @@ public class DisplayOutput extends JTextField {
     public void deleteText() {
         int textLength = this.getText().length();
         if (textLength > 0) {
-            this.setText(this.getText().substring(0, textLength-1));
+            this.setText(this.getText().substring(0, textLength - 1));
         }
     }
 }
