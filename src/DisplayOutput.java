@@ -21,11 +21,12 @@ public class DisplayOutput extends JTextField {
         this.setText("");
     }
 
-    public void equalsOperator() {
-        displayExtractor();
+    public void equals() {
+        this.setText(String.valueOf(displayExtractor()));
+
     }
 
-    public void displayExtractor() {
+    public double displayExtractor() {
         String display = this.getText();
         ArrayList<String> numbersArray = new ArrayList<>();
         ArrayList<Character> operatorsArray = new ArrayList<>();
@@ -60,14 +61,69 @@ public class DisplayOutput extends JTextField {
                 previousChar = currentChar; //makes currentChar previousChar for the next iteration
             }
             System.out.println("Numbers: " + numbersArray);
-            System.out.println("Operators: " + operatorsArray); //need to write logic to handle arrays
+            System.out.println("Operators: " + operatorsArray);
         }
 
-        for (String str : numbersArray) {
+        for (String str : numbersArray) { //converts <String>numbersArray to doubleArray
             double value = Double.parseDouble(str);
             doubleArray.add(value);
         }
         System.out.println("Double numbers: " + doubleArray);
+        double result = performCalculation(doubleArray, operatorsArray);
+        System.out.println("Result: " + result);
+    return result;
+    }
+
+    public double performCalculation(ArrayList<Double>doubleArray, ArrayList<Character>operatorsArray){
+        for(int i = 0; i < operatorsArray.size(); i++){
+            if (operatorsArray.get(i) =='/'){
+                double temp = divide(doubleArray.get(i),doubleArray.get(i+1));
+                doubleArray.set(i, temp);
+                doubleArray.remove(i+1);
+                operatorsArray.remove(i);
+            }
+        }
+        for(int i = 0; i < operatorsArray.size(); i++){
+            if (operatorsArray.get(i) =='*'){
+                double temp = multiply(doubleArray.get(i),doubleArray.get(i+1));
+                doubleArray.set(i, temp);
+                doubleArray.remove(i+1);
+                operatorsArray.remove(i);
+            }
+        }
+        for(int i = 0; i < operatorsArray.size(); i++){
+            if (operatorsArray.get(i) =='+'){
+                double temp = add(doubleArray.get(i),doubleArray.get(i+1));
+                doubleArray.set(i, temp);
+                doubleArray.remove(i+1);
+                operatorsArray.remove(i);
+            }
+        }
+        for(int i = 0; i < operatorsArray.size(); i++){
+            if (operatorsArray.get(i) =='-'){
+                double temp = subtract(doubleArray.get(i),doubleArray.get(i+1));
+                doubleArray.set(i, temp);
+                doubleArray.remove(i+1);
+                operatorsArray.remove(i);
+            }
+        }
+        return (doubleArray.get(0));
+    }
+
+    public double divide(double num1, double num2){
+        return num1/num2;
+    }
+
+    public double multiply(double num1, double num2){
+        return num1*num2;
+    }
+
+    public double add(double num1, double num2){
+        return num1+num2;
+    }
+
+    public double subtract(double num1, double num2){
+        return num1-num2;
     }
 
     public void deleteText() {

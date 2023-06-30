@@ -23,7 +23,7 @@ public class Button extends JButton implements ActionListener {
         switch (actionCommand) {
             case "C" -> displayOutput.clearAll();
             case "DEL" -> displayOutput.deleteText();
-            case "=" ->  displayOutput.equalsOperator();
+            case "=" ->  displayOutput.equals();
             default -> displayOutput.addText(actionCommand);
         }
     }
