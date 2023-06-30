@@ -7,7 +7,7 @@ public class Button extends JButton implements ActionListener {
     DisplayOutput displayOutput;
 
     Button(String text, DisplayOutput displayOutput) {
-        super(text);
+        this.setText(text);
         this.setActionCommand(text);
         this.setFont(new Font("Arial", Font.BOLD, 20));
         this.setBackground(Color.lightGray);
