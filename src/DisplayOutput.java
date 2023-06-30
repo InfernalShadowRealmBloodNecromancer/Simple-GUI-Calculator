@@ -91,7 +91,7 @@ public class DisplayOutput extends JTextField {
             }
         } catch (NumberFormatException e) { //throws syntax error if non-numbers are detected in numbersArray
              syntaxError();
-         }
+        }
     }
 
     public double performCalculation() {
