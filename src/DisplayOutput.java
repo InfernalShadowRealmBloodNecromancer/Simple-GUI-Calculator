@@ -130,8 +130,6 @@ public class DisplayOutput extends JTextField {
                 i--;
             }
         }
-        System.out.println(doubleArray);
-        System.out.println(operatorsArray);
         return (doubleArray.get(0));
     }
 
