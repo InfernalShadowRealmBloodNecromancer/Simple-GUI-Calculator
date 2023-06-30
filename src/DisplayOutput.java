@@ -3,9 +3,13 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class DisplayOutput extends JTextField {
+    ArrayList<Double> doubleArray;
+    ArrayList<String> numbersArray;
+    ArrayList<Character> operatorsArray;
+
     DisplayOutput() {
         this.setHorizontalAlignment(JLabel.RIGHT);
-        this.setFont(new Font("digital-7", Font.PLAIN,60));
+        this.setFont(new Font("digital-7", Font.PLAIN, 60));
         this.setBackground(Color.gray);
         this.setForeground(Color.BLACK);
         this.setOpaque(true);
@@ -17,25 +21,32 @@ public class DisplayOutput extends JTextField {
         this.setText(this.getText().concat(text));
     }
 
+    public void syntaxError() {
+        this.setText("Error: syntax");
+    }
+
+    public void divideError() {
+        this.setText("Error: divide by zero");
+    }
+
     public void clearAll() {
         this.setText("");
     }
 
     public void equals() {
-        this.setText(String.valueOf(displayExtractor()));
-
+        displayExtractor();
+        this.setText(String.valueOf(performCalculation(doubleArray, operatorsArray)));
     }
 
-    public double displayExtractor() {
+    public void displayExtractor() {
         String display = this.getText();
-        ArrayList<String> numbersArray = new ArrayList<>();
-        ArrayList<Character> operatorsArray = new ArrayList<>();
-        ArrayList<Double> doubleArray = new ArrayList<>();
+        numbersArray = new ArrayList<>();
+        operatorsArray = new ArrayList<>();
 
         if (display.length() > 0) { //won't run if there's nothing in the display
             char previousChar = ' '; //gives previousChar a value for the first iteration
 
-            for(int i = 0; i < display.length(); i++) {
+            for (int i = 0; i < display.length(); i++) {
                 char currentChar = display.charAt(i);
                 int lastIndex = numbersArray.size() - 1;
                 if (numbersArray.isEmpty()) {
@@ -52,7 +63,7 @@ public class DisplayOutput extends JTextField {
                             numbersArray.set(lastIndex, numbersArray.get(lastIndex) + (display.charAt(i))); //else if the previousChar is not an operator, will concatenate currentChar to the last value in numberArray
                         }
                     } else //else the currentChar is an operator
-                        if (!Character.isDigit(previousChar) && (previousChar != '.')){ //if the previous character is an operator
+                        if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if the previous character is an operator
                             numbersArray.add(String.valueOf(currentChar)); //if there's two operators in a row, this adds the second operator to the numbersArray
                         } else {
                             operatorsArray.add(currentChar); //adds the operator to operatorArray
@@ -60,69 +71,70 @@ public class DisplayOutput extends JTextField {
                 }
                 previousChar = currentChar; //makes currentChar previousChar for the next iteration
             }
-            System.out.println("Numbers: " + numbersArray);
-            System.out.println("Operators: " + operatorsArray);
         }
+        System.out.println("Numbers: " + numbersArray);
+        System.out.println("Operators: " + operatorsArray);
+        convertArrayList(numbersArray);
+    }
 
+    public void convertArrayList(ArrayList<String> numbersArray) {
+        doubleArray = new ArrayList<>();
         for (String str : numbersArray) { //converts <String>numbersArray to doubleArray
             double value = Double.parseDouble(str);
             doubleArray.add(value);
         }
-        System.out.println("Double numbers: " + doubleArray);
-        double result = performCalculation(doubleArray, operatorsArray);
-        System.out.println("Result: " + result);
-    return result;
+        System.out.println("Doubles: " + doubleArray);
     }
 
-    public double performCalculation(ArrayList<Double>doubleArray, ArrayList<Character>operatorsArray){
-        for(int i = 0; i < operatorsArray.size(); i++){
-            if (operatorsArray.get(i) =='/'){
-                double temp = divide(doubleArray.get(i),doubleArray.get(i+1));
+    public double performCalculation(ArrayList<Double>doubleArray, ArrayList<Character>operatorsArray) {
+        for (int i = 0; i < operatorsArray.size(); i++) {
+            if (operatorsArray.get(i) == '/') {
+                double temp = divide(doubleArray.get(i), doubleArray.get(i + 1));
                 doubleArray.set(i, temp);
-                doubleArray.remove(i+1);
+                doubleArray.remove(i + 1);
                 operatorsArray.remove(i);
             }
         }
-        for(int i = 0; i < operatorsArray.size(); i++){
-            if (operatorsArray.get(i) =='*'){
-                double temp = multiply(doubleArray.get(i),doubleArray.get(i+1));
+        for (int i = 0; i < operatorsArray.size(); i++) {
+            if (operatorsArray.get(i) == '*') {
+                double temp = multiply(doubleArray.get(i), doubleArray.get(i + 1));
                 doubleArray.set(i, temp);
-                doubleArray.remove(i+1);
+                doubleArray.remove(i + 1);
                 operatorsArray.remove(i);
             }
         }
-        for(int i = 0; i < operatorsArray.size(); i++){
-            if (operatorsArray.get(i) =='+'){
-                double temp = add(doubleArray.get(i),doubleArray.get(i+1));
+        for (int i = 0; i < operatorsArray.size(); i++) {
+            if (operatorsArray.get(i) == '+') {
+                double temp = add(doubleArray.get(i), doubleArray.get(i + 1));
                 doubleArray.set(i, temp);
-                doubleArray.remove(i+1);
+                doubleArray.remove(i + 1);
                 operatorsArray.remove(i);
             }
         }
-        for(int i = 0; i < operatorsArray.size(); i++){
-            if (operatorsArray.get(i) =='-'){
-                double temp = subtract(doubleArray.get(i),doubleArray.get(i+1));
+        for (int i = 0; i < operatorsArray.size(); i++) {
+            if (operatorsArray.get(i) == '-') {
+                double temp = subtract(doubleArray.get(i), doubleArray.get(i + 1));
                 doubleArray.set(i, temp);
-                doubleArray.remove(i+1);
+                doubleArray.remove(i + 1);
                 operatorsArray.remove(i);
             }
         }
         return (doubleArray.get(0));
     }
 
-    public double divide(double num1, double num2){
+    public double divide(double num1, double num2) {
         return num1/num2;
     }
 
-    public double multiply(double num1, double num2){
+    public double multiply(double num1, double num2) {
         return num1*num2;
     }
 
-    public double add(double num1, double num2){
+    public double add(double num1, double num2) {
         return num1+num2;
     }
 
-    public double subtract(double num1, double num2){
+    public double subtract(double num1, double num2) {
         return num1-num2;
     }
 
