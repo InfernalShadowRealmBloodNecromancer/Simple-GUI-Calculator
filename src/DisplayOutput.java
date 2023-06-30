@@ -23,14 +23,19 @@ public class DisplayOutput extends JTextField {
 
     public void syntaxError() {
         JOptionPane.showMessageDialog(null, "Syntax Error", "Syntax Error", JOptionPane.ERROR_MESSAGE);
+        clearAll();
     }
 
     public void divideError() {
         JOptionPane.showMessageDialog(null, "Divide by Zero Error", "Divide by Zero Error", JOptionPane.ERROR_MESSAGE);
+        clearAll();
     }
 
     public void clearAll() {
         this.setText("");
+        doubleArray.clear();
+        numbersArray.clear();
+        operatorsArray.clear();
     }
 
     public void equals() {
