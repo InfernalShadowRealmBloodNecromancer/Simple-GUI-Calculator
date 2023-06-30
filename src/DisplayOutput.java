@@ -84,7 +84,7 @@ public class DisplayOutput extends JTextField {
                 double value = Double.parseDouble(str);
                 doubleArray.add(value);
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException e) { //throws syntax error if non-numbers are detected in numbersArray
              syntaxError();
          }
     }
@@ -93,14 +93,18 @@ public class DisplayOutput extends JTextField {
         for (int i = 0; i < operatorsArray.size(); i++) {
             if (operatorsArray.get(i) == '/') {
                 double divisor = doubleArray.get(i+1);
-                if (divisor == 0){
+                try {
+                    if (divisor == 0) {
+                        throw new ArithmeticException("Divide by Zero Error");
+                    }
+                    double temp = divide(doubleArray.get(i), doubleArray.get(i + 1));
+                    doubleArray.set(i, temp);
+                    doubleArray.remove(i + 1);
+                    operatorsArray.remove(i);
+                    i--;
+                } catch (ArithmeticException e) {
                     divideError();
                 }
-                double temp = divide(doubleArray.get(i), doubleArray.get(i + 1));
-                doubleArray.set(i, temp);
-                doubleArray.remove(i + 1);
-                operatorsArray.remove(i);
-                i--;
             }
         }
         for (int i = 0; i < operatorsArray.size(); i++) {
