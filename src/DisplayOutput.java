@@ -22,11 +22,11 @@ public class DisplayOutput extends JTextField {
     }
 
     public void syntaxError() {
-        this.setText("Error: syntax");
+        JOptionPane.showMessageDialog(null, "Syntax Error", "Syntax Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void divideError() {
-        this.setText("Error: divide by zero");
+        JOptionPane.showMessageDialog(null, "Divide by Zero Error", "Divide by Zero Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void clearAll() {
@@ -35,15 +35,17 @@ public class DisplayOutput extends JTextField {
 
     public void equals() {
         displayExtractor();
-        this.setText(String.valueOf(performCalculation(doubleArray, operatorsArray)));
+        if ((!this.getText().isBlank()) && !this.getText().equals("Infinity")){
+            this.setText(String.valueOf(performCalculation(doubleArray, operatorsArray)));
+        }
     }
 
     public void displayExtractor() {
-        String display = this.getText();
         numbersArray = new ArrayList<>();
         operatorsArray = new ArrayList<>();
+        String display = this.getText();
 
-        if (display.length() > 0) { //won't run if there's nothing in the display
+        if ((display.length() > 0))  { //won't run if there's nothing in the display
             char previousChar = ' '; //gives previousChar a value for the first iteration
 
             for (int i = 0; i < display.length(); i++) {
@@ -79,16 +81,24 @@ public class DisplayOutput extends JTextField {
 
     public void convertArrayList(ArrayList<String> numbersArray) {
         doubleArray = new ArrayList<>();
-        for (String str : numbersArray) { //converts <String>numbersArray to doubleArray
-            double value = Double.parseDouble(str);
-            doubleArray.add(value);
-        }
-        System.out.println("Doubles: " + doubleArray);
+        try {
+             for (String str : numbersArray) { //converts <String>numbersArray to doubleArray
+                double value = Double.parseDouble(str);
+                doubleArray.add(value);
+            }
+            System.out.println("Doubles: " + doubleArray);
+        } catch (NumberFormatException e) {
+             syntaxError();
+         }
     }
 
     public double performCalculation(ArrayList<Double>doubleArray, ArrayList<Character>operatorsArray) {
         for (int i = 0; i < operatorsArray.size(); i++) {
             if (operatorsArray.get(i) == '/') {
+                double divisor = doubleArray.get(i+1);
+                if (divisor == 0){
+                    divideError();
+                }
                 double temp = divide(doubleArray.get(i), doubleArray.get(i + 1));
                 doubleArray.set(i, temp);
                 doubleArray.remove(i + 1);
