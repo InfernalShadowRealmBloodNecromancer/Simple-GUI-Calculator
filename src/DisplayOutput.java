@@ -35,7 +35,7 @@ public class DisplayOutput extends JTextField {
 
     public void equals() {
         displayExtractor();
-        if ((!this.getText().isBlank()) && !this.getText().equals("Infinity")){
+        if (!this.getText().isBlank()){
             this.setText(String.valueOf(performCalculation()));
        }
     }
