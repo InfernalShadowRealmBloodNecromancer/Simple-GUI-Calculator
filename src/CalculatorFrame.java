@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Calculator extends JFrame {
-    Calculator() {
+public class CalculatorFrame extends JFrame {
+    CalculatorFrame() {
         this.setPreferredSize(new Dimension(500,500));
         this.getContentPane().setBackground(Color.darkGray);
         this.setLayout(new GridBagLayout());
