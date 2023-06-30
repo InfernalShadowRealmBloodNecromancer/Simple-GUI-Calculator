@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Button extends JButton implements ActionListener {
-    private final DisplayOutput displayOutput;
+    DisplayOutput displayOutput;
 
     Button(String text, DisplayOutput displayOutput) {
         super(text);
