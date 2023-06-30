@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class CalculatorFrame extends JFrame {
     CalculatorFrame() {
-        this.setPreferredSize(new Dimension(500,500));
+        this.setPreferredSize(new Dimension(550,550));
         this.getContentPane().setBackground(Color.darkGray);
         this.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();

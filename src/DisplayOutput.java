@@ -41,7 +41,10 @@ public class DisplayOutput extends JTextField {
     public void equals() {
         displayExtractor();
         if (!this.getText().isBlank()) {
-            this.setText(String.valueOf(performCalculation()));
+            performCalculation();
+            if(!doubleArray.isEmpty()) {
+                this.setText(String.valueOf(doubleArray.get(0)));
+            }
        }
     }
 
@@ -94,52 +97,56 @@ public class DisplayOutput extends JTextField {
         }
     }
 
-    public double performCalculation() {
-        for (int i = 0; i < operatorsArray.size(); i++) {
-            if (operatorsArray.get(i) == '/') {
-                double divisor = doubleArray.get(i+1);
-                try {
-                    if (divisor == 0) {
-                        throw new ArithmeticException("Divide by Zero Error");
+    public void performCalculation() {
+        try {
+            for (int i = 0; i < operatorsArray.size(); i++) {
+                if (operatorsArray.get(i) == '/') {
+                    double divisor = doubleArray.get(i + 1);
+                    try {
+                        if (divisor == 0) {
+                            throw new ArithmeticException("Divide by Zero Error");
+                        }
+                        double temp = divide(doubleArray.get(i), doubleArray.get(i + 1));
+                        doubleArray.set(i, temp);
+                        doubleArray.remove(i + 1);
+                        operatorsArray.remove(i);
+                        i--;
+                    } catch (ArithmeticException e) {
+                        divideError();
+                        return;
                     }
-                    double temp = divide(doubleArray.get(i), doubleArray.get(i + 1));
+                }
+            }
+            for (int i = 0; i < operatorsArray.size(); i++) {
+                if (operatorsArray.get(i) == '*') {
+                    double temp = multiply(doubleArray.get(i), doubleArray.get(i + 1));
                     doubleArray.set(i, temp);
                     doubleArray.remove(i + 1);
                     operatorsArray.remove(i);
                     i--;
-                } catch (ArithmeticException e) {
-                    divideError();
                 }
             }
-        }
-        for (int i = 0; i < operatorsArray.size(); i++) {
-            if (operatorsArray.get(i) == '*') {
-                double temp = multiply(doubleArray.get(i), doubleArray.get(i + 1));
-                doubleArray.set(i, temp);
-                doubleArray.remove(i + 1);
-                operatorsArray.remove(i);
-                i--;
+            for (int i = 0; i < operatorsArray.size(); i++) {
+                if (operatorsArray.get(i) == '+') {
+                    double temp = add(doubleArray.get(i), doubleArray.get(i + 1));
+                    doubleArray.set(i, temp);
+                    doubleArray.remove(i + 1);
+                    operatorsArray.remove(i);
+                    i--;
+                }
             }
-        }
-        for (int i = 0; i < operatorsArray.size(); i++) {
-            if (operatorsArray.get(i) == '+') {
-                double temp = add(doubleArray.get(i), doubleArray.get(i + 1));
-                doubleArray.set(i, temp);
-                doubleArray.remove(i + 1);
-                operatorsArray.remove(i);
-                i--;
+            for (int i = 0; i < operatorsArray.size(); i++) {
+                if (operatorsArray.get(i) == '-') {
+                    double temp = subtract(doubleArray.get(i), doubleArray.get(i + 1));
+                    doubleArray.set(i, temp);
+                    doubleArray.remove(i + 1);
+                    operatorsArray.remove(i);
+                    i--;
+                }
             }
+        } catch (IndexOutOfBoundsException e) {
+            syntaxError();
         }
-        for (int i = 0; i < operatorsArray.size(); i++) {
-            if (operatorsArray.get(i) == '-') {
-                double temp = subtract(doubleArray.get(i), doubleArray.get(i + 1));
-                doubleArray.set(i, temp);
-                doubleArray.remove(i + 1);
-                operatorsArray.remove(i);
-                i--;
-            }
-        }
-        return (doubleArray.get(0));
     }
 
     public double divide(double num1, double num2) {
