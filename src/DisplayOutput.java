@@ -36,8 +36,8 @@ public class DisplayOutput extends JTextField {
     public void equals() {
         displayExtractor();
         if ((!this.getText().isBlank()) && !this.getText().equals("Infinity")){
-            this.setText(String.valueOf(performCalculation(doubleArray, operatorsArray)));
-        }
+            this.setText(String.valueOf(performCalculation()));
+       }
     }
 
     public void displayExtractor() {
@@ -74,8 +74,6 @@ public class DisplayOutput extends JTextField {
                 previousChar = currentChar; //makes currentChar previousChar for the next iteration
             }
         }
-        System.out.println("Numbers: " + numbersArray);
-        System.out.println("Operators: " + operatorsArray);
         convertArrayList(numbersArray);
     }
 
@@ -86,13 +84,12 @@ public class DisplayOutput extends JTextField {
                 double value = Double.parseDouble(str);
                 doubleArray.add(value);
             }
-            System.out.println("Doubles: " + doubleArray);
         } catch (NumberFormatException e) {
              syntaxError();
          }
     }
 
-    public double performCalculation(ArrayList<Double>doubleArray, ArrayList<Character>operatorsArray) {
+    public double performCalculation() {
         for (int i = 0; i < operatorsArray.size(); i++) {
             if (operatorsArray.get(i) == '/') {
                 double divisor = doubleArray.get(i+1);
@@ -129,6 +126,8 @@ public class DisplayOutput extends JTextField {
                 operatorsArray.remove(i);
             }
         }
+        System.out.println(doubleArray);
+        System.out.println(operatorsArray);
         return (doubleArray.get(0));
     }
 
