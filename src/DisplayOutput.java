@@ -100,6 +100,7 @@ public class DisplayOutput extends JTextField {
                 doubleArray.set(i, temp);
                 doubleArray.remove(i + 1);
                 operatorsArray.remove(i);
+                i--;
             }
         }
         for (int i = 0; i < operatorsArray.size(); i++) {
@@ -108,6 +109,7 @@ public class DisplayOutput extends JTextField {
                 doubleArray.set(i, temp);
                 doubleArray.remove(i + 1);
                 operatorsArray.remove(i);
+                i--;
             }
         }
         for (int i = 0; i < operatorsArray.size(); i++) {
@@ -116,6 +118,7 @@ public class DisplayOutput extends JTextField {
                 doubleArray.set(i, temp);
                 doubleArray.remove(i + 1);
                 operatorsArray.remove(i);
+                i--;
             }
         }
         for (int i = 0; i < operatorsArray.size(); i++) {
@@ -124,6 +127,7 @@ public class DisplayOutput extends JTextField {
                 doubleArray.set(i, temp);
                 doubleArray.remove(i + 1);
                 operatorsArray.remove(i);
+                i--;
             }
         }
         System.out.println(doubleArray);
