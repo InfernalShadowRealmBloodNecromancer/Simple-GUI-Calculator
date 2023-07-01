@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Button extends JButton {
-
     Button(String text, CalculatorDisplay calculatorDisplay) {
         this.setText(text);
         this.setActionCommand(text);

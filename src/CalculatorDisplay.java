@@ -3,9 +3,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class CalculatorDisplay extends JTextField {
-    ArrayList<Double> doubleArray;
-    ArrayList<String> numbersArray;
-    ArrayList<Character> operatorsArray;
+    ArrayList<Double> doubleArray = new ArrayList<>();
+    ArrayList<String> numbersArray = new ArrayList<>();
+    ArrayList<Character> operatorsArray = new ArrayList<>();
 
     CalculatorDisplay() {
         this.setHorizontalAlignment(JLabel.RIGHT);
@@ -49,8 +49,6 @@ public class CalculatorDisplay extends JTextField {
     }
 
     public void displayExtractor() {
-        numbersArray = new ArrayList<>();
-        operatorsArray = new ArrayList<>();
         String display = this.getText();
 
         if ((display.length() > 0))  { //won't run if there's nothing in the display
@@ -86,7 +84,6 @@ public class CalculatorDisplay extends JTextField {
     }
 
     public void convertArrayList(ArrayList<String> numbersArray) {
-        doubleArray = new ArrayList<>();
         try {
              for (String str : numbersArray) { //converts <String>numbersArray to doubleArray
                 double value = Double.parseDouble(str);
