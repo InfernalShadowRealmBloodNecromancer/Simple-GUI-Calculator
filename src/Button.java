@@ -1,9 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class CalculatorButton extends JButton {
+public class Button extends JButton {
 
-    CalculatorButton(String text, CalculatorDisplay calculatorDisplay) {
+    Button(String text, CalculatorDisplay calculatorDisplay) {
         this.setText(text);
         this.setActionCommand(text);
         this.setFont(new Font("Arial", Font.BOLD, 20));

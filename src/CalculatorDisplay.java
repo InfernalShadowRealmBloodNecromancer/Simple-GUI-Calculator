@@ -21,13 +21,13 @@ public class CalculatorDisplay extends JTextField {
         this.setText(this.getText().concat(text));
     }
 
-    public void syntaxError() {
-        JOptionPane.showMessageDialog(null, "Syntax Error", "Syntax Error", JOptionPane.ERROR_MESSAGE);
-        clearAll();
-    }
-
-    public void divideError() {
-        JOptionPane.showMessageDialog(null, "Divide by Zero Error", "Divide by Zero Error", JOptionPane.ERROR_MESSAGE);
+    public void Error(String errorType) {
+        if (errorType.equals("syntax")) {
+            JOptionPane.showMessageDialog(null, "Syntax Error", "Syntax Error", JOptionPane.ERROR_MESSAGE);
+        }
+        if (errorType.equals("divide")) {
+            JOptionPane.showMessageDialog(null, "Divide by Zero Error", "Divide by Zero Error", JOptionPane.ERROR_MESSAGE);
+        }
         clearAll();
     }
 
@@ -93,7 +93,7 @@ public class CalculatorDisplay extends JTextField {
                 doubleArray.add(value);
             }
         } catch (NumberFormatException e) { //throws syntax error if non-numbers are detected in numbersArray
-             syntaxError();
+             Error("syntax");
         }
     }
 
@@ -102,19 +102,15 @@ public class CalculatorDisplay extends JTextField {
             for (int i = 0; i < operatorsArray.size(); i++) {
                 if (operatorsArray.get(i) == '/') {
                     double divisor = doubleArray.get(i + 1);
-                    try {
                         if (divisor == 0) {
-                            throw new ArithmeticException("Divide by Zero Error");
+                            Error("divide");
+                            return;
                         }
                         double temp = applyOperator('/', doubleArray.get(i), doubleArray.get(i + 1));
                         doubleArray.set(i, temp);
                         doubleArray.remove(i + 1);
                         operatorsArray.remove(i);
                         i--;
-                    } catch (ArithmeticException e) {
-                        divideError();
-                        return;
-                    }
                 }
             }
             for (int i = 0; i < operatorsArray.size(); i++) {
@@ -145,7 +141,7 @@ public class CalculatorDisplay extends JTextField {
                 }
             }
         } catch (IndexOutOfBoundsException e) {
-            syntaxError();
+            Error("syntax");
         }
     }
 
@@ -164,7 +160,7 @@ public class CalculatorDisplay extends JTextField {
                 return num1 - num2;
             }
             default -> {
-                syntaxError();
+                Error("syntax");
                 throw new IllegalArgumentException("Invalid Operator: " + operator);
             }
         }
