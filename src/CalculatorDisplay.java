@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class CalculatorDisplay extends JTextField {
@@ -16,6 +18,7 @@ public class CalculatorDisplay extends JTextField {
         this.setEditable(false);
         this.setCaretColor(getBackground());
         this.setText("");
+        setKeyListener();
     }
 
     public void addText(String text) {
@@ -170,5 +173,35 @@ public class CalculatorDisplay extends JTextField {
         if (textLength > 0) {
             this.setText(this.getText().substring(0, textLength - 1));
         }
+    }
+    public void setKeyListener(){
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyChar()) {
+                    case '1' -> CalculatorDisplay.this.addText("1");
+                    case '2' -> CalculatorDisplay.this.addText("2");
+                    case '3' -> CalculatorDisplay.this.addText("3");
+                    case '4' -> CalculatorDisplay.this.addText("4");
+                    case '5' -> CalculatorDisplay.this.addText("5");
+                    case '6' -> CalculatorDisplay.this.addText("6");
+                    case '7' -> CalculatorDisplay.this.addText("7");
+                    case '8' -> CalculatorDisplay.this.addText("8");
+                    case '9' -> CalculatorDisplay.this.addText("9");
+                    case '0' -> CalculatorDisplay.this.addText("0");
+                    case '.' -> CalculatorDisplay.this.addText(".");
+                    case '+' -> CalculatorDisplay.this.addText("+");
+                    case '-' -> CalculatorDisplay.this.addText("-");
+                    case '/', '÷' -> CalculatorDisplay.this.addText("/");
+                    case '*', '×' -> CalculatorDisplay.this.addText("*");
+                    case KeyEvent.VK_DELETE, KeyEvent.VK_BACK_SPACE -> CalculatorDisplay.this.deleteText();
+                    case '=', KeyEvent.VK_ENTER -> CalculatorDisplay.this.equals();
+                    case 'C', 'c' -> {
+                        CalculatorDisplay.this.clearAll();
+                        CalculatorDisplay.this.setText("");
+                    }
+                }
+            }
+        });
     }
 }
