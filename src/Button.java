@@ -11,7 +11,10 @@ public class Button extends JButton {
         this.setFocusable(false);
         addActionListener(e -> {
             switch (e.getActionCommand()) {
-                case "C" -> calculatorDisplay.clearAll();
+                case "C" -> {
+                    calculatorDisplay.clearAll();
+                    calculatorDisplay.setText("");
+                }
                 case "DEL" -> calculatorDisplay.deleteText();
                 case "=" -> calculatorDisplay.equals();
                 default -> calculatorDisplay.addText(e.getActionCommand());
