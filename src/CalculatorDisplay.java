@@ -15,6 +15,7 @@ public class CalculatorDisplay extends JTextField {
         this.setOpaque(true);
         this.setEditable(false);
         this.setCaretColor(getBackground());
+        this.setText("");
     }
 
     public void addText(String text) {
@@ -32,7 +33,6 @@ public class CalculatorDisplay extends JTextField {
     }
 
     public void clearAll() {
-        this.setText("");
         doubleArray.clear();
         numbersArray.clear();
         operatorsArray.clear();
@@ -40,22 +40,23 @@ public class CalculatorDisplay extends JTextField {
 
     public void equals() {
         displayExtractor();
-        if (!this.getText().isBlank()) {
+        if (!this.getText().isBlank()) { //only runs calculation logic if display is not blank
             performCalculation();
             if(!doubleArray.isEmpty()) {
                 this.setText(String.valueOf(doubleArray.get(0)));
+                clearAll();
             }
        }
     }
 
     public void displayExtractor() {
-        String display = this.getText();
+       String displayText = this.getText();
 
-        if ((display.length() > 0))  { //won't run if there's nothing in the display
+        if ((displayText.length() > 0))  { //won't run if there's nothing in the display
             char previousChar = ' '; //gives previousChar a value for the first iteration
 
-            for (int i = 0; i < display.length(); i++) {
-                char currentChar = display.charAt(i);
+            for (int i = 0; i < displayText.length(); i++) {
+                char currentChar = displayText.charAt(i);
                 int lastIndex = numbersArray.size() - 1;
                 if (numbersArray.isEmpty()) {
                     numbersArray.add(String.valueOf(currentChar));
@@ -63,12 +64,12 @@ public class CalculatorDisplay extends JTextField {
                     if (Character.isDigit(currentChar) || currentChar == '.') { //if currentChar is a number or decimal point
                         if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if previousChar is an operator
                             if (numbersArray.get(lastIndex).equals("-") || numbersArray.get(lastIndex).equals("+")) { //if the previous value in numbersArray is a + or - operator
-                                numbersArray.set(lastIndex, numbersArray.get(lastIndex) + (display.charAt(i))); //the currentChar will be concatenated to the operator to create a negative/positive number
+                                numbersArray.set(lastIndex, numbersArray.get(lastIndex) + (displayText.charAt(i))); //the currentChar will be concatenated to the operator to create a negative/positive number
                             } else {
                                 numbersArray.add(String.valueOf(currentChar));//else adds the currentChar as a new value in the array
                             }
                         } else {
-                            numbersArray.set(lastIndex, numbersArray.get(lastIndex) + (display.charAt(i))); //else if the previousChar is not an operator, will concatenate currentChar to the last value in numberArray
+                            numbersArray.set(lastIndex, numbersArray.get(lastIndex) + (displayText.charAt(i))); //else if the previousChar is not an operator, will concatenate currentChar to the last value in numberArray
                         }
                     } else //else the currentChar is an operator
                         if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if the previous character is an operator
