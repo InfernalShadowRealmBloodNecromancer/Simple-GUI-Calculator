@@ -2,12 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class DisplayOutput extends JTextField {
+public class CalculatorDisplay extends JTextField {
     ArrayList<Double> doubleArray;
     ArrayList<String> numbersArray;
     ArrayList<Character> operatorsArray;
 
-    DisplayOutput() {
+    CalculatorDisplay() {
         this.setHorizontalAlignment(JLabel.RIGHT);
         this.setFont(new Font("digital-7", Font.PLAIN, 60));
         this.setBackground(Color.gray);

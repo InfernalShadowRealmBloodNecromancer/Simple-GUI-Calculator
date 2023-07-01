@@ -3,10 +3,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Button extends JButton implements ActionListener {
-    DisplayOutput displayOutput;
+public class CalculatorButton extends JButton implements ActionListener {
+    CalculatorDisplay calculatorDisplay;
 
-    Button(String text, DisplayOutput displayOutput) {
+    CalculatorButton(String text, CalculatorDisplay calculatorDisplay) {
         this.setText(text);
         this.setActionCommand(text);
         this.setFont(new Font("Arial", Font.BOLD, 20));
@@ -14,17 +14,17 @@ public class Button extends JButton implements ActionListener {
         this.setForeground(Color.black);
         this.setFocusable(false);
         addActionListener(this);
-        this.displayOutput = displayOutput;
+        this.calculatorDisplay = calculatorDisplay;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
         switch (actionCommand) {
-            case "C" -> displayOutput.clearAll();
-            case "DEL" -> displayOutput.deleteText();
-            case "=" -> displayOutput.equals();
-            default -> displayOutput.addText(actionCommand);
+            case "C" -> calculatorDisplay.clearAll();
+            case "DEL" -> calculatorDisplay.deleteText();
+            case "=" -> calculatorDisplay.equals();
+            default -> calculatorDisplay.addText(actionCommand);
         }
     }
 }
