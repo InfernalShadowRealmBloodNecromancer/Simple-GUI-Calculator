@@ -149,7 +149,7 @@ public class DisplayOutput extends JTextField {
         }
     }
 
-    public double applyOperator(char operator, double num1, double num2){
+    public double applyOperator(char operator, double num1, double num2) {
         switch (operator) {
             case '/' -> {
                 return num1 / num2;
