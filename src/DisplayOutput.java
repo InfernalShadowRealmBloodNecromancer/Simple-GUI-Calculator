@@ -106,7 +106,7 @@ public class DisplayOutput extends JTextField {
                         if (divisor == 0) {
                             throw new ArithmeticException("Divide by Zero Error");
                         }
-                        double temp = divide(doubleArray.get(i), doubleArray.get(i + 1));
+                        double temp = applyOperator('/', doubleArray.get(i), doubleArray.get(i + 1));
                         doubleArray.set(i, temp);
                         doubleArray.remove(i + 1);
                         operatorsArray.remove(i);
@@ -119,7 +119,7 @@ public class DisplayOutput extends JTextField {
             }
             for (int i = 0; i < operatorsArray.size(); i++) {
                 if (operatorsArray.get(i) == '*') {
-                    double temp = multiply(doubleArray.get(i), doubleArray.get(i + 1));
+                    double temp = applyOperator('*', doubleArray.get(i), doubleArray.get(i + 1));
                     doubleArray.set(i, temp);
                     doubleArray.remove(i + 1);
                     operatorsArray.remove(i);
@@ -128,7 +128,7 @@ public class DisplayOutput extends JTextField {
             }
             for (int i = 0; i < operatorsArray.size(); i++) {
                 if (operatorsArray.get(i) == '+') {
-                    double temp = add(doubleArray.get(i), doubleArray.get(i + 1));
+                    double temp = applyOperator('+', doubleArray.get(i), doubleArray.get(i + 1));
                     doubleArray.set(i, temp);
                     doubleArray.remove(i + 1);
                     operatorsArray.remove(i);
@@ -137,7 +137,7 @@ public class DisplayOutput extends JTextField {
             }
             for (int i = 0; i < operatorsArray.size(); i++) {
                 if (operatorsArray.get(i) == '-') {
-                    double temp = subtract(doubleArray.get(i), doubleArray.get(i + 1));
+                    double temp = applyOperator('-', doubleArray.get(i), doubleArray.get(i + 1));
                     doubleArray.set(i, temp);
                     doubleArray.remove(i + 1);
                     operatorsArray.remove(i);
@@ -149,20 +149,25 @@ public class DisplayOutput extends JTextField {
         }
     }
 
-    public double divide(double num1, double num2) {
-        return num1/num2;
-    }
-
-    public double multiply(double num1, double num2) {
-        return num1*num2;
-    }
-
-    public double add(double num1, double num2) {
-        return num1+num2;
-    }
-
-    public double subtract(double num1, double num2) {
-        return num1-num2;
+    public double applyOperator(char operator, double num1, double num2){
+        switch (operator) {
+            case '/' -> {
+                return num1 / num2;
+            }
+            case '*' -> {
+                return num1 * num2;
+            }
+            case '+' -> {
+                return num1 + num2;
+            }
+            case '-' -> {
+                return num1 - num2;
+            }
+            default -> {
+                syntaxError();
+                throw new IllegalArgumentException("Invalid Operator: " + operator);
+            }
+        }
     }
 
     public void deleteText() {
