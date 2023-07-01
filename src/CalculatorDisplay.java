@@ -174,6 +174,7 @@ public class CalculatorDisplay extends JTextField {
             this.setText(this.getText().substring(0, textLength - 1));
         }
     }
+
     public void setKeyListener(){
         addKeyListener(new KeyAdapter() {
             @Override
