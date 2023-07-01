@@ -84,13 +84,14 @@ public class CalculatorDisplay extends JTextField {
     }
 
     public void convertArrayList(ArrayList<String> numbersArray) {
-        try {
-             for (String str : numbersArray) { //converts <String>numbersArray to doubleArray
+        for (String str : numbersArray) { //converts <String>numbersArray to doubleArray
+            try {
                 double value = Double.parseDouble(str);
                 doubleArray.add(value);
+            } catch (NumberFormatException e) { //throws syntax error if non-numbers are detected in numbersArray
+                Error("syntax");
+                return;
             }
-        } catch (NumberFormatException e) { //throws syntax error if non-numbers are detected in numbersArray
-             Error("syntax");
         }
     }
 
@@ -107,7 +108,7 @@ public class CalculatorDisplay extends JTextField {
                         doubleArray.set(i, temp);
                         doubleArray.remove(i + 1);
                         operatorsArray.remove(i);
-                        i--;
+                        i--; //Decrement i to account for the removed operator
                 }
             }
             for (int i = 0; i < operatorsArray.size(); i++) {
