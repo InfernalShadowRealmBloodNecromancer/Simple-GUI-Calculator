@@ -42,7 +42,7 @@ public class CalculatorDisplay extends JTextField {
     }
 
     public void equals() {
-        displayExtractor();
+        displayTextExtractor();
         if (!this.getText().isBlank()) { //only runs calculation logic if display is not blank
             performCalculation();
             if(!numbersAsDoubles.isEmpty()) {
@@ -52,7 +52,7 @@ public class CalculatorDisplay extends JTextField {
        }
     }
 
-    public void displayExtractor() {
+    public void displayTextExtractor() {
        String displayText = this.getText();
 
         if ((displayText.length() > 0))  { //won't run if there's nothing in the display
