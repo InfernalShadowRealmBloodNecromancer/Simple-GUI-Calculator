@@ -12,7 +12,7 @@ public class Button extends JButton {
         addActionListener(e -> {
             switch (e.getActionCommand()) {
                 case "C" -> {
-                    calculatorDisplay.clearAll();
+                    calculatorDisplay.clearAllArrayLists();
                     calculatorDisplay.setText("");
                 }
                 case "DEL" -> calculatorDisplay.deleteText();

@@ -5,9 +5,9 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class CalculatorDisplay extends JTextField {
-    ArrayList<Double> doubleArray = new ArrayList<>();
-    ArrayList<String> numbersArray = new ArrayList<>();
-    ArrayList<Character> operatorsArray = new ArrayList<>();
+    ArrayList<Double> numbersAsDoubles = new ArrayList<>();
+    ArrayList<String> numbersAsStrings = new ArrayList<>();
+    ArrayList<Character> operators = new ArrayList<>();
 
     CalculatorDisplay() {
         this.setHorizontalAlignment(JLabel.RIGHT);
@@ -32,22 +32,22 @@ public class CalculatorDisplay extends JTextField {
         if (errorType.equals("divide")) {
             JOptionPane.showMessageDialog(null, "Divide by Zero Error", "Divide by Zero Error", JOptionPane.ERROR_MESSAGE);
         }
-        clearAll();
+        clearAllArrayLists();
     }
 
-    public void clearAll() {
-        doubleArray.clear();
-        numbersArray.clear();
-        operatorsArray.clear();
+    public void clearAllArrayLists() {
+        numbersAsDoubles.clear();
+        numbersAsStrings.clear();
+        operators.clear();
     }
 
     public void equals() {
         displayExtractor();
         if (!this.getText().isBlank()) { //only runs calculation logic if display is not blank
             performCalculation();
-            if(!doubleArray.isEmpty()) {
-                this.setText(String.valueOf(doubleArray.get(0)));
-                clearAll();
+            if(!numbersAsDoubles.isEmpty()) {
+                this.setText(String.valueOf(numbersAsDoubles.get(0)));
+                clearAllArrayLists();
             }
        }
     }
@@ -60,38 +60,38 @@ public class CalculatorDisplay extends JTextField {
 
             for (int i = 0; i < displayText.length(); i++) {
                 char currentChar = displayText.charAt(i);
-                int lastIndex = numbersArray.size() - 1;
-                if (numbersArray.isEmpty()) {
-                    numbersArray.add(String.valueOf(currentChar));
+                int lastIndex = numbersAsStrings.size() - 1;
+                if (numbersAsStrings.isEmpty()) {
+                    numbersAsStrings.add(String.valueOf(currentChar));
                 } else {
                     if (Character.isDigit(currentChar) || currentChar == '.') { //if currentChar is a number or decimal point
                         if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if previousChar is an operator
-                            if (numbersArray.get(lastIndex).equals("-") || numbersArray.get(lastIndex).equals("+")) { //if the previous value in numbersArray is a + or - operator
-                                numbersArray.set(lastIndex, numbersArray.get(lastIndex) + (displayText.charAt(i))); //the currentChar will be concatenated to the operator to create a negative/positive number
+                            if (numbersAsStrings.get(lastIndex).equals("-") || numbersAsStrings.get(lastIndex).equals("+")) { //if the previous value in numbersArray is a + or - operator
+                                numbersAsStrings.set(lastIndex, numbersAsStrings.get(lastIndex) + (displayText.charAt(i))); //the currentChar will be concatenated to the operator to create a negative/positive number
                             } else {
-                                numbersArray.add(String.valueOf(currentChar));//else adds the currentChar as a new value in the array
+                                numbersAsStrings.add(String.valueOf(currentChar));//else adds the currentChar as a new value in the array
                             }
                         } else {
-                            numbersArray.set(lastIndex, numbersArray.get(lastIndex) + (displayText.charAt(i))); //else if the previousChar is not an operator, will concatenate currentChar to the last value in numberArray
+                            numbersAsStrings.set(lastIndex, numbersAsStrings.get(lastIndex) + (displayText.charAt(i))); //else if the previousChar is not an operator, will concatenate currentChar to the last value in numberArray
                         }
                     } else //else the currentChar is an operator
                         if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if the previous character is an operator
-                            numbersArray.add(String.valueOf(currentChar)); //if there's two operators in a row, this adds the second operator to the numbersArray
+                            numbersAsStrings.add(String.valueOf(currentChar)); //if there's two operators in a row, this adds the second operator to the numbersArray
                         } else {
-                            operatorsArray.add(currentChar); //adds the operator to operatorArray
+                            operators.add(currentChar); //adds the operator to operatorArray
                         }
                 }
                 previousChar = currentChar; //makes currentChar previousChar for the next iteration
             }
         }
-        convertArrayList(numbersArray);
+        convertArrayList(numbersAsStrings);
     }
 
     public void convertArrayList(ArrayList<String> numbersArray) {
         for (String str : numbersArray) { //converts <String>numbersArray to doubleArray
             try {
                 double value = Double.parseDouble(str);
-                doubleArray.add(value);
+                numbersAsDoubles.add(value);
             } catch (NumberFormatException e) { //throws syntax error if non-numbers are detected in numbersArray
                 Error("syntax");
                 return;
@@ -101,44 +101,44 @@ public class CalculatorDisplay extends JTextField {
 
     public void performCalculation() {
         try {
-            for (int i = 0; i < operatorsArray.size(); i++) {
-                if (operatorsArray.get(i) == '/') {
-                    double divisor = doubleArray.get(i + 1);
+            for (int i = 0; i < operators.size(); i++) {
+                if (operators.get(i) == '/') {
+                    double divisor = numbersAsDoubles.get(i + 1);
                         if (divisor == 0) {
                             Error("divide");
                             return;
                         }
-                        double temp = applyOperator('/', doubleArray.get(i), doubleArray.get(i + 1));
-                        doubleArray.set(i, temp);
-                        doubleArray.remove(i + 1);
-                        operatorsArray.remove(i);
+                        double temp = applyOperator('/', numbersAsDoubles.get(i), numbersAsDoubles.get(i + 1));
+                        numbersAsDoubles.set(i, temp);
+                        numbersAsDoubles.remove(i + 1);
+                        operators.remove(i);
                         i--; //Decrement i to account for the removed operator
                 }
             }
-            for (int i = 0; i < operatorsArray.size(); i++) {
-                if (operatorsArray.get(i) == '*') {
-                    double temp = applyOperator('*', doubleArray.get(i), doubleArray.get(i + 1));
-                    doubleArray.set(i, temp);
-                    doubleArray.remove(i + 1);
-                    operatorsArray.remove(i);
+            for (int i = 0; i < operators.size(); i++) {
+                if (operators.get(i) == '*') {
+                    double temp = applyOperator('*', numbersAsDoubles.get(i), numbersAsDoubles.get(i + 1));
+                    numbersAsDoubles.set(i, temp);
+                    numbersAsDoubles.remove(i + 1);
+                    operators.remove(i);
                     i--;
                 }
             }
-            for (int i = 0; i < operatorsArray.size(); i++) {
-                if (operatorsArray.get(i) == '+') {
-                    double temp = applyOperator('+', doubleArray.get(i), doubleArray.get(i + 1));
-                    doubleArray.set(i, temp);
-                    doubleArray.remove(i + 1);
-                    operatorsArray.remove(i);
+            for (int i = 0; i < operators.size(); i++) {
+                if (operators.get(i) == '+') {
+                    double temp = applyOperator('+', numbersAsDoubles.get(i), numbersAsDoubles.get(i + 1));
+                    numbersAsDoubles.set(i, temp);
+                    numbersAsDoubles.remove(i + 1);
+                    operators.remove(i);
                     i--;
                 }
             }
-            for (int i = 0; i < operatorsArray.size(); i++) {
-                if (operatorsArray.get(i) == '-') {
-                    double temp = applyOperator('-', doubleArray.get(i), doubleArray.get(i + 1));
-                    doubleArray.set(i, temp);
-                    doubleArray.remove(i + 1);
-                    operatorsArray.remove(i);
+            for (int i = 0; i < operators.size(); i++) {
+                if (operators.get(i) == '-') {
+                    double temp = applyOperator('-', numbersAsDoubles.get(i), numbersAsDoubles.get(i + 1));
+                    numbersAsDoubles.set(i, temp);
+                    numbersAsDoubles.remove(i + 1);
+                    operators.remove(i);
                     i--;
                 }
             }
@@ -198,7 +198,7 @@ public class CalculatorDisplay extends JTextField {
                     case KeyEvent.VK_DELETE, KeyEvent.VK_BACK_SPACE -> CalculatorDisplay.this.deleteText();
                     case '=', KeyEvent.VK_ENTER -> CalculatorDisplay.this.equals();
                     case 'C', 'c' -> {
-                        CalculatorDisplay.this.clearAll();
+                        CalculatorDisplay.this.clearAllArrayLists();
                         CalculatorDisplay.this.setText("");
                     }
                 }
