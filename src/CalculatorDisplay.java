@@ -175,7 +175,7 @@ public class CalculatorDisplay extends JTextField {
         }
     }
 
-    public void setKeyListener(){
+    public void setKeyListener() {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
