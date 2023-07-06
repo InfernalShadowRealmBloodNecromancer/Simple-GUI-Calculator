@@ -7,7 +7,7 @@ public class ButtonPanel extends JPanel {
         this.setBackground(Color.darkGray);
         this.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.insets = new Insets(5, 5, 5, 5);
+        constraints.insets = new Insets(4, 4, 4, 4);
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weighty = 1;
         constraints.weightx = 1;
@@ -22,6 +22,10 @@ public class ButtonPanel extends JPanel {
         Button button6 = new Button("6", calculatorDisplay);
         Button button9 = new Button("9", calculatorDisplay);
         Button buttonDecimal = new Button(".", calculatorDisplay);
+        Button buttonOpenBracket = new Button("(", calculatorDisplay);
+        Button buttonCloseBracket = new Button(")", calculatorDisplay);
+        Button buttonBlank = new Button("", calculatorDisplay);
+        Button buttonBlank2 = new Button("", calculatorDisplay);
         Button buttonAdd = new Button("+", calculatorDisplay);
         Button buttonDivide = new Button("/", calculatorDisplay);
         Button buttonMultiply = new Button("*", calculatorDisplay);
@@ -71,6 +75,16 @@ public class ButtonPanel extends JPanel {
         this.add(buttonAdd, constraints);
 
         constraints.gridx = 4; // column 5
+        constraints.gridy = 0;
+        this.add(buttonOpenBracket, constraints);
+        constraints.gridy = 1;
+        this.add(buttonCloseBracket, constraints);
+        constraints.gridy = 2;
+        this.add(buttonBlank, constraints);
+        constraints.gridy = 3;
+        this.add(buttonBlank2, constraints);
+
+        constraints.gridx = 5; // column 6
         constraints.gridy = 0;
         this.add(buttonClear, constraints);
         constraints.gridy = 1;

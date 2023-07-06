@@ -3,11 +3,10 @@ import javax.swing.*;
 
 public class CalculatorFrame extends JFrame {
     CalculatorFrame() {
-        this.setPreferredSize(new Dimension(550,550));
+        this.setPreferredSize(new Dimension(700,700));
         this.getContentPane().setBackground(Color.darkGray);
         this.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.insets= new Insets(5,5,5,5);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Calculator");
 

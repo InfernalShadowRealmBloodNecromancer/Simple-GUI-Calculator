@@ -11,13 +11,14 @@ public class CalculatorDisplay extends JTextField {
 
     CalculatorDisplay() {
         this.setHorizontalAlignment(JLabel.RIGHT);
-        this.setFont(new Font("digital-7", Font.PLAIN, 60));
-        this.setBackground(Color.gray);
-        this.setForeground(Color.BLACK);
+        this.setFont(new Font("digital-7", Font.PLAIN, 80));
+        this.setBackground(Color.darkGray);
+        this.setForeground(Color.white);
         this.setOpaque(true);
         this.setEditable(false);
         this.setCaretColor(getBackground());
         this.setText("");
+        this.setBorder(null);
         setKeyListener();
     }
 

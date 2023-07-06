@@ -5,9 +5,9 @@ public class Button extends JButton {
     Button(String text, CalculatorDisplay calculatorDisplay) {
         this.setText(text);
         this.setActionCommand(text);
-        this.setFont(new Font("Arial", Font.BOLD, 20));
-        this.setBackground(Color.lightGray);
-        this.setForeground(Color.black);
+        this.setFont(new Font("Inter", Font.BOLD, 30));
+        this.setBackground(Color.gray);
+        this.setForeground(Color.white);
         this.setFocusable(false);
         addActionListener(e -> {
             switch (e.getActionCommand()) {
