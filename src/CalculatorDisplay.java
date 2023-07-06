@@ -56,9 +56,9 @@ public class CalculatorDisplay extends JTextField {
         String display = this.getText();
         while (display.contains("(") || display.contains(")")) {
             int openingBracketIndex = display.lastIndexOf("(");
-            int closingBracketIndex = display.indexOf(")", openingBracketIndex); //starts the index for indexOf() from the last "(", where "(" will be i=0
+            int nextClosingBracketIndex = openingBracketIndex + (display.indexOf(")", openingBracketIndex)); //starts the index for indexOf() from the last "(", where "(" will be i=0
 
-            if (closingBracketIndex == -1 || openingBracketIndex == -1) {
+            if (nextClosingBracketIndex == -1 || openingBracketIndex == -1) { //handles missing brackets
                 Error("syntax");
                 return;
             }
@@ -98,10 +98,10 @@ public class CalculatorDisplay extends JTextField {
                 previousChar = currentChar; //makes currentChar previousChar for the next iteration
             }
         }
-        convertArrayList(numbersAsStrings);
+        convertStringsToDoubles(numbersAsStrings);
     }
 
-    public void convertArrayList(ArrayList<String> numbersArray) {
+    public void convertStringsToDoubles(ArrayList<String> numbersArray) {
         for (String str : numbersArray) { //converts <String>numbersArray to doubleArray
             try {
                 double value = Double.parseDouble(str);
