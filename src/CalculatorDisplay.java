@@ -56,7 +56,7 @@ public class CalculatorDisplay extends JTextField {
         String display = this.getText();
         while (display.contains("(") || display.contains(")")) {
             int openingBracketIndex = display.lastIndexOf("(");
-            int nextClosingBracketIndex = openingBracketIndex + (display.indexOf(")", openingBracketIndex)); //starts the index for indexOf() from the last "(", where "(" will be i=0
+            int nextClosingBracketIndex = openingBracketIndex + (display.indexOf(")", openingBracketIndex)); //starts the index for indexOf() from the last "(", where "(" i = 0
 
             if (nextClosingBracketIndex == -1 || openingBracketIndex == -1) { //handles missing brackets
                 Error("syntax");
@@ -68,37 +68,36 @@ public class CalculatorDisplay extends JTextField {
 
     public void displayTextExtractor() {
        String display = this.getText();
+       if ((display.length() > 0))  { //won't run if there's nothing in the display
+           char previousChar = ' '; //gives previousChar a value for the first iteration
 
-        if ((display.length() > 0))  { //won't run if there's nothing in the display
-            char previousChar = ' '; //gives previousChar a value for the first iteration
-
-            for (int i = 0; i < display.length(); i++) {
-                char currentChar = display.charAt(i);
-                int lastIndex = numbersAsStrings.size() - 1;
-                if (numbersAsStrings.isEmpty()) {
-                    numbersAsStrings.add(String.valueOf(currentChar));
-                } else {
-                    if (Character.isDigit(currentChar) || currentChar == '.') { //if currentChar is a number or decimal point
-                        if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if previousChar is an operator
-                            if (numbersAsStrings.get(lastIndex).equals("-") || numbersAsStrings.get(lastIndex).equals("+")) { //if the previous value in numbersArray is a + or - operator
-                                numbersAsStrings.set(lastIndex, numbersAsStrings.get(lastIndex) + (display.charAt(i))); //the currentChar will be concatenated to the operator to create a negative/positive number
-                            } else {
-                                numbersAsStrings.add(String.valueOf(currentChar));//else adds the currentChar as a new value in the array
-                            }
-                        } else {
-                            numbersAsStrings.set(lastIndex, numbersAsStrings.get(lastIndex) + (display.charAt(i))); //else if the previousChar is not an operator, will concatenate currentChar to the last value in numberArray
-                        }
-                    } else //else the currentChar is an operator
-                        if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if the previous character is an operator
-                            numbersAsStrings.add(String.valueOf(currentChar)); //if there's two operators in a row, this adds the second operator to the numbersArray
-                        } else {
-                            operators.add(currentChar); //adds the operator to operatorArray
-                        }
-                }
-                previousChar = currentChar; //makes currentChar previousChar for the next iteration
-            }
-        }
-        convertStringsToDoubles(numbersAsStrings);
+           for (int i = 0; i < display.length(); i++) {
+               char currentChar = display.charAt(i);
+               int lastIndex = numbersAsStrings.size() - 1;
+               if (numbersAsStrings.isEmpty()) {
+                   numbersAsStrings.add(String.valueOf(currentChar));
+               } else {
+                   if (Character.isDigit(currentChar) || currentChar == '.') { //if currentChar is a number or decimal point
+                       if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if previousChar is an operator
+                           if (numbersAsStrings.get(lastIndex).equals("-") || numbersAsStrings.get(lastIndex).equals("+")) { //if the previous value in numbersArray is a + or - operator
+                               numbersAsStrings.set(lastIndex, numbersAsStrings.get(lastIndex) + (display.charAt(i))); //the currentChar will be concatenated to the operator to create a negative/positive number
+                           } else {
+                               numbersAsStrings.add(String.valueOf(currentChar));//else adds the currentChar as a new value in the array
+                           }
+                       } else {
+                           numbersAsStrings.set(lastIndex, numbersAsStrings.get(lastIndex) + (display.charAt(i))); //else if the previousChar is not an operator, will concatenate currentChar to the last value in numberArray
+                       }
+                   } else //else the currentChar is an operator
+                       if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if the previous character is an operator
+                           numbersAsStrings.add(String.valueOf(currentChar)); //if there's two operators in a row, this adds the second operator to the numbersArray
+                       } else {
+                           operators.add(currentChar); //adds the operator to operatorArray
+                       }
+               }
+               previousChar = currentChar; //makes currentChar previousChar for the next iteration
+           }
+       }
+       convertStringsToDoubles(numbersAsStrings);
     }
 
     public void convertStringsToDoubles(ArrayList<String> numbersArray) {
