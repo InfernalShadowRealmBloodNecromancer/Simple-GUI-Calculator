@@ -52,14 +52,28 @@ public class CalculatorDisplay extends JTextField {
        }
     }
 
-    public void displayTextExtractor() {
-       String displayText = this.getText();
+    public void performBracketsCalculation() {
+        String display = this.getText();
+        while (display.contains("(") || display.contains(")")) {
+            int openingBracketIndex = display.lastIndexOf("(");
+            int closingBracketIndex = display.indexOf(")", openingBracketIndex); //starts the index for indexOf() from the last "(", where "(" will be i=0
 
-        if ((displayText.length() > 0))  { //won't run if there's nothing in the display
+            if (closingBracketIndex == -1 || openingBracketIndex == -1) {
+                Error("syntax");
+                return;
+            }
+        }
+    }
+
+
+    public void displayTextExtractor() {
+       String display = this.getText();
+
+        if ((display.length() > 0))  { //won't run if there's nothing in the display
             char previousChar = ' '; //gives previousChar a value for the first iteration
 
-            for (int i = 0; i < displayText.length(); i++) {
-                char currentChar = displayText.charAt(i);
+            for (int i = 0; i < display.length(); i++) {
+                char currentChar = display.charAt(i);
                 int lastIndex = numbersAsStrings.size() - 1;
                 if (numbersAsStrings.isEmpty()) {
                     numbersAsStrings.add(String.valueOf(currentChar));
@@ -67,12 +81,12 @@ public class CalculatorDisplay extends JTextField {
                     if (Character.isDigit(currentChar) || currentChar == '.') { //if currentChar is a number or decimal point
                         if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if previousChar is an operator
                             if (numbersAsStrings.get(lastIndex).equals("-") || numbersAsStrings.get(lastIndex).equals("+")) { //if the previous value in numbersArray is a + or - operator
-                                numbersAsStrings.set(lastIndex, numbersAsStrings.get(lastIndex) + (displayText.charAt(i))); //the currentChar will be concatenated to the operator to create a negative/positive number
+                                numbersAsStrings.set(lastIndex, numbersAsStrings.get(lastIndex) + (display.charAt(i))); //the currentChar will be concatenated to the operator to create a negative/positive number
                             } else {
                                 numbersAsStrings.add(String.valueOf(currentChar));//else adds the currentChar as a new value in the array
                             }
                         } else {
-                            numbersAsStrings.set(lastIndex, numbersAsStrings.get(lastIndex) + (displayText.charAt(i))); //else if the previousChar is not an operator, will concatenate currentChar to the last value in numberArray
+                            numbersAsStrings.set(lastIndex, numbersAsStrings.get(lastIndex) + (display.charAt(i))); //else if the previousChar is not an operator, will concatenate currentChar to the last value in numberArray
                         }
                     } else //else the currentChar is an operator
                         if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if the previous character is an operator
