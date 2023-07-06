@@ -42,6 +42,7 @@ public class CalculatorDisplay extends JTextField {
     }
 
     public void equals() {
+        performBracketsCalculation();
         splitOperatorsNumbers(this.getText());
         if(!numbersAsDoubles.isEmpty()) {
             this.setText(String.valueOf(numbersAsDoubles.get(0)));
@@ -53,18 +54,21 @@ public class CalculatorDisplay extends JTextField {
         String display = this.getText();
         while (display.contains("(") || display.contains(")")) {
             int openBracketIndex = display.lastIndexOf("(");
-            int nextCloseBracketIndex = openBracketIndex + (display.indexOf(")", openBracketIndex)); //starts the index for indexOf() from the last "(", where "(" i = 0
+            int nextCloseBracketIndex = display.indexOf(")", openBracketIndex); //starts the index for indexOf() from the last "(", where "(" i = 0
 
             if (nextCloseBracketIndex == -1 || openBracketIndex == -1) { //handles missing brackets
                 Error("syntax");
                 return;
             }
 
-            String expressionWithinBrackets = display.substring(openBracketIndex + 1, nextCloseBracketIndex - 1);
-            splitOperatorsNumbers(expressionWithinBrackets);
-            double result = numbersAsDoubles.get(0);
+            String expressionWithinBrackets = display.substring(openBracketIndex + 1, nextCloseBracketIndex); //gets the String expression within the brackets
+            splitOperatorsNumbers(expressionWithinBrackets); //sends the expression to be calculated
+            double result = (numbersAsDoubles.get(0)); //gets the result
 
+            display = display.substring(0, openBracketIndex) + result + display.substring(nextCloseBracketIndex + 1); //replaces brackets with result
+            clearAllArrayLists();
         }
+        this.setText(display);
     }
 
 
@@ -207,6 +211,8 @@ public class CalculatorDisplay extends JTextField {
                     case '8' -> CalculatorDisplay.this.addText("8");
                     case '9' -> CalculatorDisplay.this.addText("9");
                     case '0' -> CalculatorDisplay.this.addText("0");
+                    case '(' -> CalculatorDisplay.this.addText("(");
+                    case ')' -> CalculatorDisplay.this.addText(")");
                     case '.' -> CalculatorDisplay.this.addText(".");
                     case '+' -> CalculatorDisplay.this.addText("+");
                     case '-' -> CalculatorDisplay.this.addText("-");
