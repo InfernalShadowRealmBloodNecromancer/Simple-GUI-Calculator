@@ -8,6 +8,7 @@ public class CalculatorDisplay extends JTextField {
     ArrayList<Double> numbersAsDoubles = new ArrayList<>();
     ArrayList<String> numbersAsStrings = new ArrayList<>();
     ArrayList<Character> operators = new ArrayList<>();
+    boolean bracketErrorOccurred;
 
     CalculatorDisplay() {
         this.setHorizontalAlignment(JLabel.RIGHT);
@@ -47,7 +48,7 @@ public class CalculatorDisplay extends JTextField {
 
     public void equals() {
         performBracketsCalculation();
-        splitOperatorsNumbers(this.getText());
+        if(!bracketErrorOccurred) splitOperatorsNumbers(this.getText());
         if(!numbersAsDoubles.isEmpty()) {
             this.setText(String.valueOf(numbersAsDoubles.get(0)));
             clearAllArrayLists();
@@ -56,12 +57,14 @@ public class CalculatorDisplay extends JTextField {
 
     public void performBracketsCalculation() {
         String display = this.getText();
+        bracketErrorOccurred = false;
         while (display.contains("(") || display.contains(")")) {
             int openBracketIndex = display.lastIndexOf("(");
             int nextCloseBracketIndex = display.indexOf(")", openBracketIndex); //starts the index for indexOf() from the last "(", where "(" i = 0
 
             if (nextCloseBracketIndex == -1 || openBracketIndex == -1) { //handles missing brackets
                 Error("bracket");
+                bracketErrorOccurred = true;
                 return;
             }
 
@@ -82,19 +85,19 @@ public class CalculatorDisplay extends JTextField {
 
            for (int i = 0; i < input.length(); i++) {
                char currentChar = input.charAt(i);
-               int lastIndex = numbersAsStrings.size() - 1;
+               int previousIndex = numbersAsStrings.size() - 1;
                if (numbersAsStrings.isEmpty()) {
                    numbersAsStrings.add(String.valueOf(currentChar));
                } else {
                    if (Character.isDigit(currentChar) || currentChar == '.') { //if currentChar is a number or decimal point
                        if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if previousChar is an operator
-                           if (numbersAsStrings.get(lastIndex).equals("-") || numbersAsStrings.get(lastIndex).equals("+")) { //if the previous value in numbersArray is a + or - operator
-                               numbersAsStrings.set(lastIndex, numbersAsStrings.get(lastIndex) + (input.charAt(i))); //the currentChar will be concatenated to the operator to create a negative/positive number
+                           if (numbersAsStrings.get(previousIndex).equals("-")) { //if the previous value in numbersArray is - operator
+                               numbersAsStrings.set(previousIndex, numbersAsStrings.get(previousIndex) + (input.charAt(i))); //the currentChar will be concatenated to the operator to create a negative number
                            } else {
                                numbersAsStrings.add(String.valueOf(currentChar));//else adds the currentChar as a new value in the array
                            }
                        } else {
-                           numbersAsStrings.set(lastIndex, numbersAsStrings.get(lastIndex) + (input.charAt(i))); //else if the previousChar is not an operator, will concatenate currentChar to the last value in numberArray
+                           numbersAsStrings.set(previousIndex, numbersAsStrings.get(previousIndex) + (input.charAt(i))); //else if the previousChar is not an operator, will concatenate currentChar to the last value in numberArray
                        }
                    } else //else the currentChar is an operator
                        if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if the previous character is an operator
