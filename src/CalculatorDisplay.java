@@ -30,6 +30,9 @@ public class CalculatorDisplay extends JTextField {
         if (errorType.equals("syntax")) {
             JOptionPane.showMessageDialog(null, "Syntax Error", "Syntax Error", JOptionPane.ERROR_MESSAGE);
         }
+        if (errorType.equals("bracket")) {
+            JOptionPane.showMessageDialog(null, "Mismatched Brackets Error", "Mismatched Brackets Error", JOptionPane.ERROR_MESSAGE);
+        }
         if (errorType.equals("divide")) {
             JOptionPane.showMessageDialog(null, "Divide by Zero Error", "Divide by Zero Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -58,7 +61,7 @@ public class CalculatorDisplay extends JTextField {
             int nextCloseBracketIndex = display.indexOf(")", openBracketIndex); //starts the index for indexOf() from the last "(", where "(" i = 0
 
             if (nextCloseBracketIndex == -1 || openBracketIndex == -1) { //handles missing brackets
-                Error("syntax");
+                Error("bracket");
                 return;
             }
 
