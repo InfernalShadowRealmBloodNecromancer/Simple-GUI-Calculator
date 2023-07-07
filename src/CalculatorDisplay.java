@@ -88,7 +88,7 @@ public class CalculatorDisplay extends JTextField {
            for (int i = 0; i < input.length(); i++) {
                char currentChar = input.charAt(i);
                int previousIndex = numbersAsStrings.size() - 1;
-               if (numbersAsStrings.isEmpty()) {
+               if (numbersAsStrings.isEmpty() && ((currentChar == '-') || Character.isDigit(currentChar))) {
                    numbersAsStrings.add(String.valueOf(currentChar));
                } else {
                    if (Character.isDigit(currentChar) || currentChar == '.') { //if currentChar is a number or decimal point
@@ -102,8 +102,11 @@ public class CalculatorDisplay extends JTextField {
                            numbersAsStrings.set(previousIndex, numbersAsStrings.get(previousIndex) + (input.charAt(i))); //else if the previousChar is not an operator, will concatenate currentChar to the last value in numberArray
                        }
                    } else //else the currentChar is an operator
-                       if (!Character.isDigit(previousChar) && (previousChar != '.')) { //if the previous character is an operator
-                           numbersAsStrings.add(String.valueOf(currentChar)); //if there's two operators in a row, this adds the second operator to the numbersArray
+                       if (currentChar == '-' && !Character.isDigit(previousChar) && previousChar != '.') { //if the current character is - operator, and previous character is not a digit
+                           if (numbersAsStrings.get(previousIndex).equals("-")) { //if the previous character is also - (--)
+                               operators.add(currentChar); //adds current - to operators array to handle --
+                           } else
+                               numbersAsStrings.add(String.valueOf(currentChar)); //if current char is - and previous char is an operator that's not -, adds - to numbers array to create a negative number
                        } else {
                            operators.add(currentChar); //adds the operator to operatorArray
                        }
@@ -111,8 +114,8 @@ public class CalculatorDisplay extends JTextField {
                previousChar = currentChar; //makes currentChar previousChar for the next iteration
            }
        }
-        System.out.println(numbersAsStrings);
-        System.out.println(operators);
+        System.out.println("numbers: " + numbersAsStrings);
+        System.out.println("operators: " + operators);
         convertStringsToDoubles(numbersAsStrings);
         if (!this.getText().isBlank()) { //only runs calculation logic if display is not blank
             performCalculation();
