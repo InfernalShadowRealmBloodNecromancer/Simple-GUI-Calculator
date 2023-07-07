@@ -8,7 +8,7 @@ public class CalculatorDisplay extends JTextField {
     ArrayList<Double> numbersAsDoubles = new ArrayList<>();
     ArrayList<String> numbersAsStrings = new ArrayList<>();
     ArrayList<Character> operators = new ArrayList<>();
-    boolean bracketErrorOccurred;
+    boolean bracketErrorOccurred = false;
 
     CalculatorDisplay() {
         this.setHorizontalAlignment(JLabel.RIGHT);
@@ -48,11 +48,13 @@ public class CalculatorDisplay extends JTextField {
 
     public void equals() {
         performBracketsCalculation();
-        if(!bracketErrorOccurred) splitOperatorsNumbers(this.getText());
-        if(!numbersAsDoubles.isEmpty()) {
-            this.setText(String.valueOf(numbersAsDoubles.get(0)));
-            clearAllArrayLists();
+        if(!bracketErrorOccurred) {
+            splitOperatorsNumbers(this.getText());
+            if(!numbersAsDoubles.isEmpty()) {
+                this.setText(String.valueOf(numbersAsDoubles.get(0)));
+            }
         }
+        clearAllArrayLists();
     }
 
     public void performBracketsCalculation() {
@@ -94,7 +96,7 @@ public class CalculatorDisplay extends JTextField {
                            if (numbersAsStrings.get(previousIndex).equals("-")) { //if the previous value in numbersArray is - operator
                                numbersAsStrings.set(previousIndex, numbersAsStrings.get(previousIndex) + (input.charAt(i))); //the currentChar will be concatenated to the operator to create a negative number
                            } else {
-                               numbersAsStrings.add(String.valueOf(currentChar));//else adds the currentChar as a new value in the array
+                               numbersAsStrings.add(String.valueOf(currentChar)); //else adds the currentChar as a new value in the array
                            }
                        } else {
                            numbersAsStrings.set(previousIndex, numbersAsStrings.get(previousIndex) + (input.charAt(i))); //else if the previousChar is not an operator, will concatenate currentChar to the last value in numberArray
@@ -109,10 +111,12 @@ public class CalculatorDisplay extends JTextField {
                previousChar = currentChar; //makes currentChar previousChar for the next iteration
            }
        }
-       convertStringsToDoubles(numbersAsStrings);
-       if (!this.getText().isBlank()) { //only runs calculation logic if display is not blank
-           performCalculation();
-       }
+        System.out.println(numbersAsStrings);
+        System.out.println(operators);
+        convertStringsToDoubles(numbersAsStrings);
+        if (!this.getText().isBlank()) { //only runs calculation logic if display is not blank
+            performCalculation();
+        }
     }
 
     public void convertStringsToDoubles(ArrayList<String> numbersArray) {
